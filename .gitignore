@@ -1,0 +1,38 @@
+# Python
+*.pyc
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Database
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+
+# Virtual Environment
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+
+# Test files
+test_*.py.bak
+
+# Deployment packages
+ChatApp-Package.zip
+*.zip
