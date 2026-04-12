@@ -51,7 +51,7 @@ class ChatServer:
     def start(self):
         """Start the server"""
         try:
-            # Create a TCP socket (SOCK_STREAM) using IPv4 (AF_INET)
+            # Create a TCP socket using IPv4
             self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             
             # Allow the address to be reused immediately after server restart
@@ -61,7 +61,7 @@ class ChatServer:
             # Bind the socket to the specified host and port
             self.server_socket.bind((SERVER_HOST, SERVER_PORT))
             
-            # Start listening for connections (backlog queue of 5)
+            # Start listening for connections
             self.server_socket.listen(5)
             
             # Mark server as running
@@ -73,7 +73,7 @@ class ChatServer:
             # Main server loop - continuously accept new connections
             while self.running:
                 try:
-                    # Accept incoming connection (this blocks until a client connects)
+                    # Accept incoming connection
                     # Returns: client socket and (IP address, port) tuple
                     client_socket, client_address = self.server_socket.accept()
                     
@@ -111,7 +111,7 @@ class ChatServer:
         username = None  # Track username for cleanup on disconnect
         
         try:
-            # ============ AUTHENTICATION PHASE ============
+            # AUTHENTICATION PHASE
             # Send username request to client
             client_socket.send("USERNAME_REQUEST".encode(MESSAGE_ENCODING))
             
@@ -137,7 +137,7 @@ class ChatServer:
             
             print(f"[SERVER] {username} joined the chat")
             
-            # ============ SEND WELCOME MESSAGE ============
+            # SEND WELCOME MESSAGE
             # Create a welcome message from the server
             welcome_msg = {
                 'type': 'message',
@@ -148,7 +148,7 @@ class ChatServer:
             # Send welcome message with delimiter appended
             client_socket.send((json.dumps(welcome_msg) + MESSAGE_DELIMITER).encode(MESSAGE_ENCODING))
             
-            # ============ MESSAGE LOOP ============
+            # MESSAGE LOOP
             # Continuously listen for messages from this client
             while self.running:
                 try:
@@ -177,10 +177,10 @@ class ChatServer:
                     # Generate timestamp for this message
                     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                     
-                    # ============ SAVE MESSAGE TO DATABASE ============
+                    # SAVE MESSAGE TO DATABASE
                     self.database.save_message(username, content, timestamp)
                     
-                    # ============ BROADCAST TO ALL CLIENTS ============
+                    # BROADCAST TO ALL CLIENTS
                     # Create message object to broadcast
                     broadcast_msg = {
                         'type': 'message',
@@ -205,7 +205,7 @@ class ChatServer:
             print(f"[ERROR] Handling client: {e}")
         
         finally:
-            # ============ CLEANUP ON DISCONNECT ============
+            # CLEANUP ON DISCONNECT
             # This runs when client disconnects or error occurs
             if username:
                 print(f"[SERVER] {username} has left")
