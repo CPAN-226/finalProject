@@ -18,7 +18,7 @@ class ChatDatabase:
     
     def __init__(self):
         """Initialize database connection and create schema if needed"""
-        # ============ ENSURE DATA DIRECTORY EXISTS ============
+        # ENSURE DATA DIRECTORY EXISTS
         # Get the parent directory of the database file
         db_dir = os.path.dirname(DATABASE_PATH)
         
@@ -67,7 +67,7 @@ class ChatDatabase:
             return False
         
         try:
-            # ============ CREATE MESSAGES TABLE ============
+            # CREATE MESSAGES TABLE
             # IF NOT EXISTS: Only create if table doesn't already exist (safe to run multiple times)
             self.cursor.execute('''
                 CREATE TABLE IF NOT EXISTS messages (
@@ -108,7 +108,7 @@ class ChatDatabase:
             if timestamp is None:
                 timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             
-            # ============ INSERT MESSAGE INTO DATABASE ============
+            # INSERT MESSAGE INTO DATABASE
             # Use parameterized query (?, ?, ?) to prevent SQL injection
             # Values are safely inserted without risk of malicious SQL
             self.cursor.execute(
