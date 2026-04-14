@@ -70,7 +70,7 @@ class ChatClient:
             # Store username for later use
             self.username = username
            
-            # ============ CREATE SOCKET CONNECTION ============
+            #CREATE SOCKET CONNECTION
             # Create TCP socket (SOCK_STREAM) using IPv4 (AF_INET)
             self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             
@@ -84,7 +84,7 @@ class ChatClient:
             # Remove timeout after successful connection (None = blocking mode)
             self.socket.settimeout(None)
            
-            # ============ AUTHENTICATION HANDSHAKE ============
+            #AUTHENTICATION HANDSHAKE
             # Wait for server to request username
             server_msg = self.socket.recv(BUFFER_SIZE).decode(MESSAGE_ENCODING)
            
@@ -103,7 +103,7 @@ class ChatClient:
             # Mark connection as established
             self.connected = True
            
-            # ============ START RECEIVE THREAD ============
+            #START RECEIVE THREAD
             # Create daemon thread to listen for incoming messages
             # daemon=True means thread will exit when main program exits
             self.receive_thread = threading.Thread(target=self._receive_messages, daemon=True)
@@ -141,7 +141,7 @@ class ChatClient:
                 # Decode bytes to string and add to buffer
                 buffer += data.decode(MESSAGE_ENCODING)
                
-                # ============ PROCESS COMPLETE MESSAGES ============
+                #PROCESS COMPLETE MESSAGES
                 # TCP is a stream protocol - messages may be fragmented
                 # We use delimiter (\n) to identify complete messages
                 while MESSAGE_DELIMITER in buffer:

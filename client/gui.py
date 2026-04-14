@@ -40,7 +40,7 @@ class ChatGUI:
         # Current user's username
         self.username = None
        
-        # ============ CREATE MAIN WINDOW ============
+        #CREATE MAIN WINDOW
         self.window = tk.Tk()
         self.window.title(WINDOW_TITLE)
         self.window.geometry(f"{WINDOW_WIDTH}x{WINDOW_HEIGHT}")
@@ -57,7 +57,7 @@ class ChatGUI:
     def create_widgets(self):
         """Create and layout all GUI widgets"""
        
-        # ============ TITLE SECTION ============
+        #TITLE SECTION
         title_frame = tk.Frame(self.window)
         title_frame.pack(pady=10)
        
@@ -69,7 +69,7 @@ class ChatGUI:
         )
         self.title_label.pack()
        
-        # ============ CHAT DISPLAY SECTION ============
+        #CHAT DISPLAY SECTION
         chat_frame = tk.Frame(self.window)
         chat_frame.pack(padx=10, pady=5, fill=tk.BOTH, expand=True)
        
@@ -84,7 +84,7 @@ class ChatGUI:
         )
         self.chat_display.pack(fill=tk.BOTH, expand=True)
        
-        # ============ INPUT SECTION ============
+        #INPUT SECTION
         input_frame = tk.Frame(self.window)
         input_frame.pack(padx=10, pady=5, fill=tk.X)
        
@@ -108,7 +108,7 @@ class ChatGUI:
         )
         self.send_button.pack(side=tk.LEFT)
        
-        # ============ STATUS BAR ============
+        #STATUS BAR
         # Status label at bottom showing connection info
         self.status_label = tk.Label(
             self.window,
@@ -120,7 +120,7 @@ class ChatGUI:
    
     def show_login_dialog(self):
         """Show login dialog to get username and server details"""
-        # ============ CREATE MODAL DIALOG ============
+        #CREATE MODAL DIALOG
         # Toplevel creates a new window on top of main window
         dialog = tk.Toplevel(self.window)
         dialog.title("Login to ChatApp")
@@ -133,7 +133,7 @@ class ChatGUI:
         # Make dialog modal (blocks interaction with main window)
         dialog.grab_set()
        
-        # ============ DIALOG CONTENT ============
+        #DIALOG CONTENT
         # Welcome title
         tk.Label(
             dialog,
@@ -163,7 +163,7 @@ class ChatGUI:
         error_label = tk.Label(dialog, text="", font=(FONT_FAMILY, 9), fg="red")
         error_label.pack()
        
-        # ============ CONNECTION HANDLER ============
+        #CONNECTION HANDLER
         def attempt_connect():
             """Validate input and attempt to connect to server"""
             # Get input values and strip whitespace
@@ -225,14 +225,14 @@ class ChatGUI:
         success, error = self.client.connect(username)
        
         if success:
-            # ============ CONNECTION SUCCESSFUL ============
+            #CONNECTION SUCCESSFUL
             # Update title to show username
             self.title_label.config(text=f"ChatApp - {username}")
             
             # Update status bar to show connection details
             self.status_label.config(text=f"Status: Connected to {server_ip}:{server_port}")
         else:
-            # ============ CONNECTION FAILED ============
+            #CONNECTION FAILED
             # Show error dialog with the error message
             messagebox.showerror("Connection Error", error)
             
